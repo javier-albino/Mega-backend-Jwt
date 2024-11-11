@@ -13,4 +13,6 @@ public class ProductRequest {
 
     private String nombre;
     private String descripcion;
+    private Integer categoriaId; // ID de la categoría
 }
+

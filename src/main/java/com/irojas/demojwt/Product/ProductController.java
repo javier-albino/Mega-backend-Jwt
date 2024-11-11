@@ -25,6 +25,7 @@ public class ProductController {
             .id(product.getId())
             .nombre(product.getNombre())
             .descripcion(product.getDescripcion())
+            .categoriaNombre(product.getCategoria() != null ? product.getCategoria().getNombre() : null) // Incluye el nombre de la categoría
             .build();
         return ResponseEntity.ok(response);
     }
@@ -37,12 +38,11 @@ public class ProductController {
                 .id(product.getId())
                 .nombre(product.getNombre())
                 .descripcion(product.getDescripcion())
+                .categoriaNombre(product.getCategoria() != null ? product.getCategoria().getNombre() : null) // Incluye el nombre de la categoría
                 .build())
             .collect(Collectors.toList());
         return ResponseEntity.ok(response);
     }
-
-
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable Integer id, @RequestBody ProductRequest request) {
@@ -52,6 +52,7 @@ public class ProductController {
                 .id(updatedProduct.getId())
                 .nombre(updatedProduct.getNombre())
                 .descripcion(updatedProduct.getDescripcion())
+                .categoriaNombre(updatedProduct.getCategoria() != null ? updatedProduct.getCategoria().getNombre() : null) // Incluye el nombre de la categoría
                 .build();
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
@@ -68,25 +69,23 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @GetMapping("/uf")
     public ResponseEntity<Double> getUfValue() {
         String url = "https://mindicador.cl/api/uf";
         RestTemplate restTemplate = new RestTemplate();
-        
+
         // Realiza la llamada y almacena la respuesta
         @SuppressWarnings("unchecked")
         Map<String, Object> response = restTemplate.getForObject(url, Map.class);
-        
+
         // Extrae la serie y maneja el mapeo de manera más segura
         @SuppressWarnings("null")
         List<?> serie = (List<?>) response.get("serie");
         @SuppressWarnings("unchecked")
         Map<String, Object> firstElement = (Map<String, Object>) serie.get(0);
         Double ufValue = ((Number) firstElement.get("valor")).doubleValue();
-        
+
         return ResponseEntity.ok(ufValue);
     }
-    
-
-
 }

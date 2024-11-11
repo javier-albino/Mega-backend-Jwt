@@ -31,6 +31,7 @@ public class SecurityConfig {
                 .requestMatchers("/products/listar").permitAll()       // Permitir los endpoint para listar productos
                 .requestMatchers("/products/{id}").permitAll()      // Requiere autenticación para obtener producto por ID
                 .requestMatchers("/products/{id}", "/products/{id}/*").permitAll() // Requiere autenticación para actualizar/eliminar producto por ID
+                .requestMatchers("/categorias/listar").permitAll() 
                 .anyRequest().authenticated()                          // Requiere autenticación para cualquier otra solicitud
             )
             .sessionManagement(sessionManager -> sessionManager

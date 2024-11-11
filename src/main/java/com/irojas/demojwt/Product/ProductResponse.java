@@ -14,4 +14,5 @@ public class ProductResponse {
     private Integer id;
     private String nombre;
     private String descripcion;
+    private String categoriaNombre; // Nombre de la categoría
 }
