@@ -32,7 +32,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/products/register").authenticated()
                         .requestMatchers("/products/listar").authenticated()
-                        .requestMatchers("/products/uf").permitAll() // Permitir acceso público
+                        .requestMatchers("/products/uf").authenticated() // Permitir acceso público
                         .requestMatchers("/categorias/listar").permitAll()
                         .requestMatchers(
                                 "/swagger-ui/**",
