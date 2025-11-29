@@ -1,4 +1,4 @@
-package com.irojas.demojwt.Product;
+package com.irojas.demojwt.Clase;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductResponse {
+public class ClaseResponse {
 
     private Integer id;
     private String nombre;
