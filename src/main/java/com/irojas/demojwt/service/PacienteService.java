@@ -45,10 +45,10 @@ public class PacienteService {
                 .orElseThrow(() -> new EntityNotFoundException("Paciente no encontrado"));
     }
 
-    @Transactional(readOnly = true)
+   /*  @Transactional(readOnly = true)
     public List<Paciente> obtenerTodos() {
         return pacienteRepository.findAll();
-    }
+    }*/
 
     @Transactional
     public Paciente actualizarPaciente(Long id, Paciente pacienteActualizado) {

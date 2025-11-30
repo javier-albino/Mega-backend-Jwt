@@ -25,10 +25,11 @@ public class PacienteController {
     }
 
     // Listar todos
-    @GetMapping
-    public ResponseEntity<List<Paciente>> obtenerTodos() {
+   /*   public ResponseEntity<List<Paciente>> obtenerTodos() {
         return ResponseEntity.ok(pacienteService.obtenerTodos());
-    }
+     @GetMapping
+        }*/
+  
 
     // Obtener por ID
     @GetMapping("/{id}")
