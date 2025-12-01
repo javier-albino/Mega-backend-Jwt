@@ -1,8 +1,7 @@
 package com.irojas.demojwt.model;
+
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "ORDEN")
@@ -15,14 +14,19 @@ public class Orden {
     @Column(nullable = false, length = 100)
     private String nombre;
 
-    private String numeroOrden; // Campo para almacenar el número de la orden
+    // número de la orden
+    private String numeroOrden;
 
-    private LocalDate fechaOrden; 
+    // fecha de la orden
+    private LocalDate fechaOrden;
 
-    @ManyToMany(mappedBy = "ordenes")
-    private Set<Paciente> pacientes = new HashSet<>();
+    // Muchas Órdenes pertenecen a un Paciente
+    @ManyToOne
+    @JoinColumn(name = "paciente_id")
+    private Paciente paciente;
 
     // getters y setters
+
     public Long getId() {
         return id;
     }
@@ -31,15 +35,22 @@ public class Orden {
         this.id = id;
     }
 
-    public Set<Paciente> getPacientes() {
-        return pacientes;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setPacientes(Set<Paciente> pacientes) {
-        this.pacientes = pacientes;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    // Getter y Setter para fechaOrden
+    public String getNumeroOrden() {
+        return numeroOrden;
+    }
+
+    public void setNumeroOrden(String numeroOrden) {
+        this.numeroOrden = numeroOrden;
+    }
+
     public LocalDate getFechaOrden() {
         return fechaOrden;
     }
@@ -48,12 +59,11 @@ public class Orden {
         this.fechaOrden = fechaOrden;
     }
 
-    // Getter y Setter para numeroOrden
-    public String getNumeroOrden() {
-        return numeroOrden;
+    public Paciente getPaciente() {
+        return paciente;
     }
 
-    public void setNumeroOrden(String numeroOrden) {
-        this.numeroOrden = numeroOrden;
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
 }

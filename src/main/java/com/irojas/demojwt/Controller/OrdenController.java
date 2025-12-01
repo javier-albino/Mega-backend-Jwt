@@ -8,48 +8,33 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/doctores")
+@RequestMapping("/api/ordenes")
 public class OrdenController {
 
-    private final OrdenService doctorService;
+    private final OrdenService ordenService;
 
-    public OrdenController(OrdenService doctorService) {
-        this.doctorService = doctorService;
+    public OrdenController(OrdenService ordenService) {
+        this.ordenService = ordenService;
     }
 
     // Crear doctor
     @PostMapping
-    public ResponseEntity<Orden> crearDoctor(@RequestBody Orden doctor) {
-        Orden creado = doctorService.crearDoctor(doctor);
+    public ResponseEntity<Orden> crearOrden(@RequestBody Orden orden) {
+        Orden creado = ordenService.crearOrden(orden);
         return ResponseEntity.ok(creado);
     }
 
     // Listar todos los doctores
     @GetMapping
     public ResponseEntity<List<Orden>> obtenerTodos() {
-        return ResponseEntity.ok(doctorService.obtenerTodos());
+        return ResponseEntity.ok(ordenService.obtenerTodas());
     }
 
     // Obtener doctor por ID
     @GetMapping("/{id}")
     public ResponseEntity<Orden> obtenerPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(doctorService.obtenerPorId(id));
+        return ResponseEntity.ok(ordenService.obtenerPorId(id));
     }
 
-    // Actualizar doctor
-    @PutMapping("/{id}")
-    public ResponseEntity<Orden> actualizarDoctor(
-            @PathVariable Long id,
-            @RequestBody Orden doctor
-    ) {
-        Orden actualizado = doctorService.actualizarDoctor(id, doctor);
-        return ResponseEntity.ok(actualizado);
-    }
-
-    // Eliminar doctor
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarDoctor(@PathVariable Long id) {
-        doctorService.eliminarDoctor(id);
-        return ResponseEntity.noContent().build();
-    }
+ 
 }

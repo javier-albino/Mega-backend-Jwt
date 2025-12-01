@@ -4,7 +4,6 @@ import com.irojas.demojwt.model.Orden;
 import com.irojas.demojwt.model.Paciente;
 import com.irojas.demojwt.repository.OrdenRepository;
 import com.irojas.demojwt.repository.PacienteRepository;
-
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,12 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class PacienteService {
 
     private final PacienteRepository pacienteRepository;
-    private final OrdenRepository doctorRepository;
+    private final OrdenRepository ordenRepository;
 
     public PacienteService(PacienteRepository pacienteRepository,
-                           OrdenRepository doctorRepository) {
+                           OrdenRepository ordenRepository) {
         this.pacienteRepository = pacienteRepository;
-        this.doctorRepository = doctorRepository;
+        this.ordenRepository = ordenRepository;
     }
 
     @Transactional
@@ -26,23 +25,40 @@ public class PacienteService {
         if (paciente == null) {
             throw new EntityNotFoundException("Paciente no puede ser nulo");
         }
+
+        // Si el paciente viene con órdenes, seteamos la relación inversa
+        if (paciente.getOrdenes() != null) {
+            for (Orden orden : paciente.getOrdenes()) {
+                orden.setPaciente(paciente);
+            }
+        }
+
         return pacienteRepository.save(paciente);
     }
 
+    /**
+     * Asignar una Orden existente a un Paciente existente
+     */
     @Transactional
-    public void asignarDoctorAPaciente(Long pacienteId, Long doctorId) {
-        if (pacienteId == null || doctorId == null) {
+    public void asignarOrdenAPaciente(Long pacienteId, Long ordenId) {
+        if (pacienteId == null || ordenId == null) {
             throw new EntityNotFoundException("IDs no pueden ser nulos");
         }
+
         Paciente paciente = pacienteRepository.findById(pacienteId)
                 .orElseThrow(() -> new EntityNotFoundException("Paciente no encontrado"));
 
-        Orden doctor = doctorRepository.findById(doctorId)
-                .orElseThrow(() -> new EntityNotFoundException("Doctor no encontrado"));
+        Orden orden = ordenRepository.findById(ordenId)
+                .orElseThrow(() -> new EntityNotFoundException("Orden no encontrada"));
 
-        paciente.getDoctores().add(doctor);
-        doctor.getPacientes().add(paciente);
-        // gracias al @Transactional y al mapeo ManyToMany, se persiste la relación
+        // Relación dueño: Orden → Paciente
+        orden.setPaciente(paciente);
+        ordenRepository.save(orden);
+
+        // Opcional: mantener la colección en memoria coherente
+        if (paciente.getOrdenes() != null && !paciente.getOrdenes().contains(orden)) {
+            paciente.getOrdenes().add(orden);
+        }
     }
 
     @Transactional(readOnly = true)
@@ -54,11 +70,6 @@ public class PacienteService {
                 .orElseThrow(() -> new EntityNotFoundException("Paciente no encontrado"));
     }
 
-   /*  @Transactional(readOnly = true)
-    public List<Paciente> obtenerTodos() {
-        return pacienteRepository.findAll();
-    }*/
-
     @Transactional
     public Paciente actualizarPaciente(Long id, Paciente pacienteActualizado) {
         Paciente paciente = obtenerPorId(id);
@@ -66,7 +77,7 @@ public class PacienteService {
         paciente.setRut(pacienteActualizado.getRut());
         paciente.setFechaNacimiento(pacienteActualizado.getFechaNacimiento());
         paciente.setEmail(pacienteActualizado.getEmail());
-        paciente.setTelefono(pacienteActualizado.getTelefono());
+
         return pacienteRepository.save(paciente);
     }
 

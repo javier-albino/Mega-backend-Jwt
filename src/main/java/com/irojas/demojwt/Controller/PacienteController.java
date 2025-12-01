@@ -5,7 +5,7 @@ import com.irojas.demojwt.service.PacienteService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-/*import java.util.List;/* */
+
 
 @RestController
 @RequestMapping("/api/pacientes")
@@ -23,13 +23,6 @@ public class PacienteController {
         Paciente creado = pacienteService.crearPaciente(paciente);
         return ResponseEntity.ok(creado);
     }
-
-    // Listar todos
-   /*   public ResponseEntity<List<Paciente>> obtenerTodos() {
-        return ResponseEntity.ok(pacienteService.obtenerTodos());
-     @GetMapping
-        }*/
-  
 
     // Obtener por ID
     @GetMapping("/{id}")
@@ -54,13 +47,13 @@ public class PacienteController {
         return ResponseEntity.noContent().build();
     }
 
-    // Asignar doctor a paciente (ManyToMany)
-    @PostMapping("/{pacienteId}/doctores/{doctorId}")
-    public ResponseEntity<Void> asignarDoctorAPaciente(
+    // Asignar ORDEN a paciente (1:N)
+    @PostMapping("/{pacienteId}/ordenes/{ordenId}")
+    public ResponseEntity<Void> asignarOrdenAPaciente(
             @PathVariable Long pacienteId,
-            @PathVariable Long doctorId
+            @PathVariable Long ordenId
     ) {
-        pacienteService.asignarDoctorAPaciente(pacienteId, doctorId);
+        pacienteService.asignarOrdenAPaciente(pacienteId, ordenId);
         return ResponseEntity.ok().build();
     }
 }
