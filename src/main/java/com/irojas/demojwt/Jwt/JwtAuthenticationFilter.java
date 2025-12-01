@@ -1,3 +1,4 @@
+/*
 package com.irojas.demojwt.Jwt;
 
 import java.io.IOException;
@@ -70,8 +71,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         return null;
     }
-
-
-
-    
-}
+}*/
