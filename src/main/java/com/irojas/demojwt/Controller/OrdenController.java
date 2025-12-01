@@ -17,24 +17,33 @@ public class OrdenController {
         this.ordenService = ordenService;
     }
 
-    // Crear doctor
-    @PostMapping
-    public ResponseEntity<Orden> crearOrden(@RequestBody Orden orden) {
-        Orden creado = ordenService.crearOrden(orden);
-        return ResponseEntity.ok(creado);
-    }
-
-    // Listar todos los doctores
     @GetMapping
-    public ResponseEntity<List<Orden>> obtenerTodos() {
-        return ResponseEntity.ok(ordenService.obtenerTodas());
+    public ResponseEntity<List<Orden>> getAllOrdenes() {
+        List<Orden> ordenes = ordenService.obtenerTodas();
+        return ResponseEntity.ok(ordenes);
     }
 
-    // Obtener doctor por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Orden> obtenerPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(ordenService.obtenerPorId(id));
+    public ResponseEntity<Orden> getOrdenById(@PathVariable Long id) {
+        Orden orden = ordenService.obtenerPorId(id);
+        return ResponseEntity.ok(orden);
     }
 
- 
+    @PostMapping
+    public ResponseEntity<Orden> createOrden(@RequestBody Orden orden) {
+        Orden createdOrden = ordenService.crearOrden(orden);
+        return ResponseEntity.ok(createdOrden);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Orden> updateOrden(@PathVariable Long id, @RequestBody Orden orden) {
+        Orden updatedOrden = ordenService.actualizarOrden(id, orden);
+        return ResponseEntity.ok(updatedOrden);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteOrden(@PathVariable Long id) {
+        ordenService.eliminarOrden(id);
+        return ResponseEntity.noContent().build();
+    }
 }
