@@ -47,7 +47,7 @@ public class PacienteController {
         return ResponseEntity.noContent().build();
     }
 
-    // Asignar ORDEN a paciente (1:N)
+    // Asignar ORDEN a paciente 
     @PostMapping("/{pacienteId}/ordenes/{ordenId}")
     public ResponseEntity<Void> asignarOrdenAPaciente(
             @PathVariable Long pacienteId,

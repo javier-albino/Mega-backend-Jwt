@@ -26,7 +26,7 @@ public class PacienteService {
             throw new EntityNotFoundException("Paciente no puede ser nulo");
         }
 
-        // Si el paciente viene con órdenes, seteamos la relación inversa
+        // Si el paciente viene con órdenes
         if (paciente.getOrdenes() != null) {
             for (Orden orden : paciente.getOrdenes()) {
                 orden.setPaciente(paciente);
@@ -55,7 +55,7 @@ public class PacienteService {
         orden.setPaciente(paciente);
         ordenRepository.save(orden);
 
-        // Opcional: mantener la colección en memoria coherente
+       
         if (paciente.getOrdenes() != null && !paciente.getOrdenes().contains(orden)) {
             paciente.getOrdenes().add(orden);
         }
