@@ -24,6 +24,9 @@ public class ExamenService {
     }
     @Transactional
     public Examen crearExamen(Long pacienteId, Examen examen) {
+        if (pacienteId == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Paciente ID no puede ser nulo");
+        }
         Paciente paciente = pacienteRepository.findById(pacienteId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente no encontrado"));
 

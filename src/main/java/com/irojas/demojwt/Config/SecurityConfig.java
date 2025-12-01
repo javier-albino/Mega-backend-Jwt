@@ -30,10 +30,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authRequest -> authRequest
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/products/register").authenticated()
-                        .requestMatchers("/products/listar").authenticated()
-                        .requestMatchers("/products/uf").authenticated() // Permitir acceso público
-                        .requestMatchers("/categorias/listar").authenticated()
+                        .requestMatchers("/products/**", "/categorias/**").authenticated()
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",

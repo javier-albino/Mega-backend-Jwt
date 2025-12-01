@@ -17,6 +17,9 @@ public class Doctor {
     @Column(length = 100)
     private String especialidad;
 
+    @Column(nullable = false, unique = true, length = 100)
+    private String email;
+
     @ManyToMany(mappedBy = "doctores")
     private Set<Paciente> pacientes = new HashSet<>();
 
@@ -43,6 +46,14 @@ public class Doctor {
 
     public void setEspecialidad(String especialidad) {
         this.especialidad = especialidad;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Set<Paciente> getPacientes() {

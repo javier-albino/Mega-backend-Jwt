@@ -23,11 +23,17 @@ public class PacienteService {
 
     @Transactional
     public Paciente crearPaciente(Paciente paciente) {
+        if (paciente == null) {
+            throw new EntityNotFoundException("Paciente no puede ser nulo");
+        }
         return pacienteRepository.save(paciente);
     }
 
     @Transactional
     public void asignarDoctorAPaciente(Long pacienteId, Long doctorId) {
+        if (pacienteId == null || doctorId == null) {
+            throw new EntityNotFoundException("IDs no pueden ser nulos");
+        }
         Paciente paciente = pacienteRepository.findById(pacienteId)
                 .orElseThrow(() -> new EntityNotFoundException("Paciente no encontrado"));
 
@@ -41,6 +47,9 @@ public class PacienteService {
 
     @Transactional(readOnly = true)
     public Paciente obtenerPorId(Long id) {
+        if (id == null) {
+            throw new EntityNotFoundException("Id no puede ser nulo");
+        }
         return pacienteRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Paciente no encontrado"));
     }
@@ -64,6 +73,8 @@ public class PacienteService {
     @Transactional
     public void eliminarPaciente(Long id) {
         Paciente paciente = obtenerPorId(id);
-        pacienteRepository.delete(paciente);
+        if (paciente != null) {
+            pacienteRepository.delete(paciente);
+        }
     }
 }
