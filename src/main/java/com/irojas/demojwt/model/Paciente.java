@@ -28,7 +28,7 @@ public class Paciente {
 
     // 1:N (1 Paciente tiene muchos Exámenes)
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Examen> examenes;
+    private List<Orden> ordenes;
 
     // N:N (Muchos pacientes atendidos por muchos doctores)
     @ManyToMany
@@ -88,11 +88,11 @@ public class Paciente {
         this.email = email;
     }
 
-    public List<Examen> getExamenes() {
-        return examenes;
+    public List<Orden> getExamenes() {
+        return ordenes;
     }
 
-    public void setExamenes(List<Examen> examenes) {
-        this.examenes = examenes;
+    public void setExamenes(List<Orden> ordenes) {
+        this.ordenes = ordenes;
     }
 }

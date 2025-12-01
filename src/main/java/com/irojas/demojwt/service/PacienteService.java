@@ -1,8 +1,8 @@
 package com.irojas.demojwt.service;
 
-import com.irojas.demojwt.model.Doctor;
+import com.irojas.demojwt.model.Orden;
 import com.irojas.demojwt.model.Paciente;
-import com.irojas.demojwt.repository.DoctorRepository;
+import com.irojas.demojwt.repository.OrdenRepository;
 import com.irojas.demojwt.repository.PacienteRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -13,10 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class PacienteService {
 
     private final PacienteRepository pacienteRepository;
-    private final DoctorRepository doctorRepository;
+    private final OrdenRepository doctorRepository;
 
     public PacienteService(PacienteRepository pacienteRepository,
-                           DoctorRepository doctorRepository) {
+                           OrdenRepository doctorRepository) {
         this.pacienteRepository = pacienteRepository;
         this.doctorRepository = doctorRepository;
     }
@@ -37,7 +37,7 @@ public class PacienteService {
         Paciente paciente = pacienteRepository.findById(pacienteId)
                 .orElseThrow(() -> new EntityNotFoundException("Paciente no encontrado"));
 
-        Doctor doctor = doctorRepository.findById(doctorId)
+        Orden doctor = doctorRepository.findById(doctorId)
                 .orElseThrow(() -> new EntityNotFoundException("Doctor no encontrado"));
 
         paciente.getDoctores().add(doctor);

@@ -1,23 +1,23 @@
 package com.irojas.demojwt.service;
 
-import com.irojas.demojwt.model.Doctor;
-import com.irojas.demojwt.repository.DoctorRepository;
+import com.irojas.demojwt.model.Orden;
+import com.irojas.demojwt.repository.OrdenRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class DoctorService {
+public class OrdenService {
 
-    private final DoctorRepository doctorRepository;
+    private final OrdenRepository doctorRepository;
 
-    public DoctorService(DoctorRepository doctorRepository) {
+    public OrdenService(OrdenRepository doctorRepository) {
         this.doctorRepository = doctorRepository;
     }
 
     // Crear doctor
-    public Doctor crearDoctor(Doctor doctor) {
+    public Orden crearDoctor(Orden doctor) {
         if (doctor == null) {
             throw new IllegalArgumentException("Doctor no puede ser nulo");
         }
@@ -25,22 +25,22 @@ public class DoctorService {
     }
 
     // Obtener todos los doctores
-    public List<Doctor> obtenerTodos() {
+    public List<Orden> obtenerTodos() {
         return doctorRepository.findAll();
     }
 
     // Obtener doctor por ID
-    public Doctor obtenerPorId(Long id) {
+    public Orden obtenerPorId(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("ID no puede ser nulo");
         }
-        Optional<Doctor> doctor = doctorRepository.findById(id);
+        Optional<Orden> doctor = doctorRepository.findById(id);
         return doctor.orElseThrow(() -> new RuntimeException("Doctor no encontrado"));
     }
 
     // Actualizar doctor
-    public Doctor actualizarDoctor(Long id, Doctor doctorActualizado) {
-        Doctor doctor = obtenerPorId(id);
+    public Orden actualizarDoctor(Long id, Orden doctorActualizado) {
+        Orden doctor = obtenerPorId(id);
         doctor.setNombre(doctorActualizado.getNombre());
         doctor.setEspecialidad(doctorActualizado.getEspecialidad());
         doctor.setEmail(doctorActualizado.getEmail());

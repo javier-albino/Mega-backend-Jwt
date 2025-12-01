@@ -1,7 +1,7 @@
 package com.irojas.demojwt.Controller;
 
-import com.irojas.demojwt.model.Doctor;
-import com.irojas.demojwt.service.DoctorService;
+import com.irojas.demojwt.model.Orden;
+import com.irojas.demojwt.service.OrdenService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,40 +9,40 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/doctores")
-public class DoctorController {
+public class OrdenController {
 
-    private final DoctorService doctorService;
+    private final OrdenService doctorService;
 
-    public DoctorController(DoctorService doctorService) {
+    public OrdenController(OrdenService doctorService) {
         this.doctorService = doctorService;
     }
 
     // Crear doctor
     @PostMapping
-    public ResponseEntity<Doctor> crearDoctor(@RequestBody Doctor doctor) {
-        Doctor creado = doctorService.crearDoctor(doctor);
+    public ResponseEntity<Orden> crearDoctor(@RequestBody Orden doctor) {
+        Orden creado = doctorService.crearDoctor(doctor);
         return ResponseEntity.ok(creado);
     }
 
     // Listar todos los doctores
     @GetMapping
-    public ResponseEntity<List<Doctor>> obtenerTodos() {
+    public ResponseEntity<List<Orden>> obtenerTodos() {
         return ResponseEntity.ok(doctorService.obtenerTodos());
     }
 
     // Obtener doctor por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Doctor> obtenerPorId(@PathVariable Long id) {
+    public ResponseEntity<Orden> obtenerPorId(@PathVariable Long id) {
         return ResponseEntity.ok(doctorService.obtenerPorId(id));
     }
 
     // Actualizar doctor
     @PutMapping("/{id}")
-    public ResponseEntity<Doctor> actualizarDoctor(
+    public ResponseEntity<Orden> actualizarDoctor(
             @PathVariable Long id,
-            @RequestBody Doctor doctor
+            @RequestBody Orden doctor
     ) {
-        Doctor actualizado = doctorService.actualizarDoctor(id, doctor);
+        Orden actualizado = doctorService.actualizarDoctor(id, doctor);
         return ResponseEntity.ok(actualizado);
     }
 
