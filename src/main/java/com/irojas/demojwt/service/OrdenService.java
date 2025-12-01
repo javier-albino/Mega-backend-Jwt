@@ -10,48 +10,46 @@ import java.util.Optional;
 @Service
 public class OrdenService {
 
-    private final OrdenRepository doctorRepository;
+    private final OrdenRepository ordenRepository;
 
-    public OrdenService(OrdenRepository doctorRepository) {
-        this.doctorRepository = doctorRepository;
+    public OrdenService(OrdenRepository ordenRepository) {
+        this.ordenRepository = ordenRepository;
     }
 
-    // Crear doctor
-    public Orden crearDoctor(Orden doctor) {
-        if (doctor == null) {
-            throw new IllegalArgumentException("Doctor no puede ser nulo");
+    // Crear orden
+    public Orden crearOrden(Orden orden) {
+        if (orden == null) {
+            throw new IllegalArgumentException("Orden no puede ser nula");
         }
-        return doctorRepository.save(doctor);
+        return ordenRepository.save(orden);
     }
 
-    // Obtener todos los doctores
-    public List<Orden> obtenerTodos() {
-        return doctorRepository.findAll();
+    // Obtener todas las órdenes
+    public List<Orden> obtenerTodas() {
+        return ordenRepository.findAll();
     }
 
-    // Obtener doctor por ID
+    // Obtener orden por ID
     public Orden obtenerPorId(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("ID no puede ser nulo");
         }
-        Optional<Orden> doctor = doctorRepository.findById(id);
-        return doctor.orElseThrow(() -> new RuntimeException("Doctor no encontrado"));
+        Optional<Orden> orden = ordenRepository.findById(id);
+        return orden.orElseThrow(() -> new RuntimeException("Orden no encontrada"));
     }
 
-    // Actualizar doctor
-    public Orden actualizarDoctor(Long id, Orden doctorActualizado) {
-        Orden doctor = obtenerPorId(id);
-        doctor.setNombre(doctorActualizado.getNombre());
-        doctor.setEspecialidad(doctorActualizado.getEspecialidad());
-        doctor.setEmail(doctorActualizado.getEmail());
-        return doctorRepository.save(doctor);
+    // Actualizar orden
+    public Orden actualizarOrden(Long id, Orden ordenActualizada) {
+        Orden orden = obtenerPorId(id);
+        orden.setNumeroOrden(ordenActualizada.getNumeroOrden());
+        return ordenRepository.save(orden);
     }
 
-    // Eliminar doctor
-    public void eliminarDoctor(Long id) {
+    // Eliminar orden
+    public void eliminarOrden(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("ID no puede ser nulo");
         }
-        doctorRepository.deleteById(id);
+        ordenRepository.deleteById(id);
     }
 }

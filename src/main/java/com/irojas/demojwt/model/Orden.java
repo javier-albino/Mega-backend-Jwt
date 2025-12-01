@@ -15,6 +15,8 @@ public class Orden {
     @Column(nullable = false, length = 100)
     private String nombre;
 
+    private String numeroOrden; // Campo para almacenar el número de la orden
+
     private LocalDate fechaOrden; 
 
     @ManyToMany(mappedBy = "ordenes")
@@ -44,5 +46,14 @@ public class Orden {
 
     public void setFechaOrden(LocalDate fechaOrden) {
         this.fechaOrden = fechaOrden;
+    }
+
+    // Getter y Setter para numeroOrden
+    public String getNumeroOrden() {
+        return numeroOrden;
+    }
+
+    public void setNumeroOrden(String numeroOrden) {
+        this.numeroOrden = numeroOrden;
     }
 }

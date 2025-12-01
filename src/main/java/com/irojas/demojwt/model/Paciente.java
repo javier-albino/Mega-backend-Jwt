@@ -30,7 +30,7 @@ public class Paciente {
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Orden> ordenes;
 
-    // N:N (Muchos pacientes atendidos por muchos doctores)
+    // N:N (Muchos pacientes atendidos por muchas órdenes)
     @ManyToMany
     @JoinTable(
             name = "PACIENTE_DOCTOR",
