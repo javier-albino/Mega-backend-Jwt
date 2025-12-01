@@ -1,79 +1,47 @@
 package com.irojas.demojwt.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "PACIENTE")
+@Table(name = "paciente")
 public class Paciente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
-    private String nombre;
-
-    @Column(nullable = false, unique = true, length = 20)
-    private String rut;
-
-    private LocalDate fechaNacimiento;
-
-    @Column(length = 120)
     private String email;
 
-        // 1:N (1 Paciente tiene muchas Órdenes)
-        @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
-        private List<Orden> ordenes;
-    
-        // getters y setters
-    
-        public Long getId() {
-            return id;
-        }
-    
-        public void setId(Long id) {
-            this.id = id;
-        }
-    
-        public String getNombre() {
-            return nombre;
-        }
-    
-        public void setNombre(String nombre) {
-            this.nombre = nombre;
-        }
-    
-        public String getRut() {
-            return rut;
-        }
-    
-        public void setRut(String rut) {
-            this.rut = rut;
-        }
-    
-        public LocalDate getFechaNacimiento() {
-            return fechaNacimiento;
-        }
-    
-        public void setFechaNacimiento(LocalDate fechaNacimiento) {
-            this.fechaNacimiento = fechaNacimiento;
-        }
-    
-        public String getEmail() {
-            return email;
-        }
-    
-        public void setEmail(String email) {
-            this.email = email;
-        }
-    
-        public List<Orden> getOrdenes() {
-            return ordenes;
-        }
-    
-        public void setOrdenes(List<Orden> ordenes) {
-            this.ordenes = ordenes;
-        }
-    }
+    @Column(name = "fecha_nacimiento")
+    private LocalDate fechaNacimiento;
+
+    private String nombre;
+
+    private String rut;
+
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore // 👈 CLAVE: evita que se serialicen todas las órdenes dentro del paciente
+    private List<Orden> ordenes;
+
+    // getters y setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public LocalDate getFechaNacimiento() { return fechaNacimiento; }
+    public void setFechaNacimiento(LocalDate fechaNacimiento) { this.fechaNacimiento = fechaNacimiento; }
+
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+
+    public String getRut() { return rut; }
+    public void setRut(String rut) { this.rut = rut; }
+
+    public List<Orden> getOrdenes() { return ordenes; }
+    public void setOrdenes(List<Orden> ordenes) { this.ordenes = ordenes; }
+}
