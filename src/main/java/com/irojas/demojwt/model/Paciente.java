@@ -26,9 +26,6 @@ public class Paciente {
     @Column(length = 120)
     private String email;
 
-    @Column(length = 20)
-    private String telefono;
-
     // 1:N (1 Paciente tiene muchos Exámenes)
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Examen> examenes;
@@ -40,14 +37,14 @@ public class Paciente {
             joinColumns = @JoinColumn(name = "paciente_id"),
             inverseJoinColumns = @JoinColumn(name = "doctor_id")
     )
-    private Set<Doctor> doctores = new HashSet<>();
+    private Set<Orden> doctores = new HashSet<>();
 
     // getters y setters
-    public Set<Doctor> getDoctores() {
+    public Set<Orden> getDoctores() {
         return doctores;
     }
 
-    public void setDoctores(Set<Doctor> doctores) {
+    public void setDoctores(Set<Orden> doctores) {
         this.doctores = doctores;
     }
 
@@ -89,14 +86,6 @@ public class Paciente {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
     }
 
     public List<Examen> getExamenes() {
